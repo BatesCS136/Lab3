@@ -11,6 +11,8 @@ using std::setw;
 using std::left;
 using std::right;
 
+int cPlayer::playerCount = 0;
+
 cPlayer::cPlayer() {
 
 }
@@ -19,7 +21,6 @@ cPlayer::cPlayer(const char* name, int grade, double gpa) {
 	this->grade = grade;
 	this->gpa = gpa;
 	this->name = new char[strlen(name) + 1]();
-	//this->name = name;
 	strcpy_s(this->name, strlen(name) + 1, name);
 }
 
@@ -74,5 +75,19 @@ void cPlayer::Display() const {
 *
 **************************************************************************/
 void cPlayer::FreeMemory() {
+	--playerCount;
 	delete[] name;
+}
+
+/**************************************************************************
+*	Purpose: Displays the current player count.
+*	
+*	Entry: Called when the user selects Display All from the menu.
+*	
+*	Exit: Displays text and a number indicating the number of players
+*	on the team.
+*
+**************************************************************************/
+void cPlayer::PlayerCount() {
+	cout << "\nNumber of players on the team: " << cPlayer::playerCount << endl;
 }

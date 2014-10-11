@@ -31,7 +31,7 @@ void cSport::DisplayMenu() {
 	while (true) {
 		char choice = '\0'; // holds the user's menu choice
 
-		cout << "\nOregon Institue of Technology";
+		cout << "\nOregon Institute of Technology";
 		cout << "\nA - Add a Player";
 		cout << "\nS - Search For / Display a Player";
 		cout << "\nD - Display all Players";
@@ -82,16 +82,17 @@ void cSport::Add() {
 	cout << "Enter GPA: ";
 	cin >> tempGPA;
 
-	cPlayer tempPlayer(tempName, tempGrade, tempGPA); // temp player object
-
+	cPlayer* tempPlayer = new cPlayer(tempName, tempGrade, tempGPA);
 
 	for (int i(0); i < length; ++i) {
 		tempArray[i] = array[i];
 	}
 
-	tempArray[length] = tempPlayer;
+	tempArray[length] = *tempPlayer;
 	++length;
+	++cPlayer::playerCount;
 	delete[] array;
+	delete tempPlayer;
 	array = tempArray;
 
 	cout << "\nRecord added!" << endl;
@@ -141,7 +142,8 @@ void cSport::Search() const {
 	char tempName[32] = { '\0' };
 
 	cout << "\n\nEnter the name of the player you're looking for: ";
-	cin >> tempName;
+	cin.ignore();
+	cin.getline(tempName, 32);
 
 	if (length > 0) {
 		for (int i(0); i < length; ++i) {
@@ -173,5 +175,5 @@ void cSport::Search() const {
 *	
 **************************************************************************/
 void cSport::DisplayCount() const {
-	cout << "\nNumber of players on the team: " << length << endl;
+	cPlayer::PlayerCount();
 }
